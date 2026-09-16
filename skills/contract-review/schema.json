@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContractReviewOutput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_type", "playbook", "findings", "red_flags", "unmapped", "cover_note"],
+  "properties": {
+    "contract_type": { "type": "string" },
+    "playbook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": { "id": { "type": "string" }, "version": { "type": "integer" } }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["clause_id", "verdict", "severity", "paragraph_ids", "position_summary", "reason", "redline"],
+        "properties": {
+          "clause_id": { "type": "string" },
+          "verdict": { "type": "string", "enum": ["compliant", "deviation", "missing", "unusual", "no_playbook_position"] },
+          "severity": { "type": "string", "enum": ["critical", "high", "medium", "low", "info"] },
+          "paragraph_ids": { "type": "array", "items": { "type": "string" } },
+          "position_summary": { "type": "string" },
+          "reason": { "type": "string" },
+          "redline": {
+            "anyOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["replaces_paragraph_ids", "new_text", "basis", "comment"],
+                "properties": {
+                  "replaces_paragraph_ids": { "type": "array", "items": { "type": "string" } },
+                  "new_text": { "type": "string" },
+                  "basis": { "type": "string", "enum": ["preferred", "fallback_1", "fallback_2", "fallback_3", "custom"] },
+                  "comment": { "type": "string", "description": "Margin comment shown to the lawyer and, if accepted, to the counterparty." }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["flag", "paragraph_ids", "detail"],
+        "properties": {
+          "flag": { "type": "string" },
+          "paragraph_ids": { "type": "array", "items": { "type": "string" } },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "unmapped": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["paragraph_ids", "summary"],
+        "properties": {
+          "paragraph_ids": { "type": "array", "items": { "type": "string" } },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "cover_note": { "type": "string" },
+    "source_quality": { "type": "string", "enum": ["clean", "low_confidence_source"] }
+  }
+}
