@@ -136,6 +136,9 @@ The lawyer accepts, rejects or edits each change in Word. Nothing goes out witho
   audit rights, exit and transition obligations, and regulatory undertakings.
 - Push them to a register with owners and reminders. This is what regulators ask for when they
   audit outsourcing arrangements.
+- The repository behind this (automatic filing of every round with its email, the version trail,
+  notice-deadline reminders, the LEXZUR migration, and a connector so Claude Enterprise can query and
+  file into it) is specified in `docs/contract-repository.md`.
 
 ### 4.8 Regulatory watch
 
